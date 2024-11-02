@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Video</title>
+    <style>
+        body {
+            margin: 0; 
+            overflow: hidden; 
+        }
+        video {
+            width: 100vw; 
+            height: 100vh; 
+            object-fit: cover; 
+        }
+    </style>
+</head>
+<body>
+    <video id="mainVideo" controls poster="poster.png">
+        <source id="videoSource" src="jumpscare.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+
+        const videoElement = document.getElementById('mainVideo');
+
+
+        function enterFullscreen() {
+            if (videoElement.requestFullscreen) {
+                videoElement.requestFullscreen();
+            } else if (videoElement.mozRequestFullScreen) { 
+                videoElement.mozRequestFullScreen();
+            } else if (videoElement.webkitRequestFullscreen) { 
+                videoElement.webkitRequestFullscreen();
+            } else if (videoElement.msRequestFullscreen) { 
+                videoElement.msRequestFullscreen();
+            }
+        }
+
+        videoElement.addEventListener('loadedmetadata', () => {
+            // Play video and try to enter fullscreen
+            videoElement.play();
+
+            setTimeout(enterFullscreen, 1000); 
+        });
+
+        videoElement.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                console.log('Exited fullscreen mode');
+            }
+        });
+    </script>
+</body>
+</html>
